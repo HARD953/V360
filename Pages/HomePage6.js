@@ -9,8 +9,7 @@ import {
   Dimensions, 
   TouchableOpacity, 
   Modal, 
-  Pressable ,
-  
+  Pressable 
 } from 'react-native';
 import { SelectList } from 'react-native-dropdown-select-list';
 import axios from "axios";
@@ -25,22 +24,13 @@ import * as Animatable from 'react-native-animatable'; // Import Animatable
 const { height, width } = Dimensions.get("screen");
 import { AuthContext } from '../Components/globalContext';
 
-export default function HomPage1({ navigation }) {
-  const { userInfo } = useContext(AuthContext);
-  const authToken = userInfo ? userInfo.access : null;
+export default function HomPage1({ navigation,route }) {
   // State declarations
-  const [entreprise, setEntreprise] = useState('');
-  const [commune, setCommune] = useState('');
+  
   const [nombreface, setNombreface] = useState(null);
   const [nombresupport, setNombresupport] = useState(null);
-  const [entreprise1, setEntreprise1] = useState([]);
   const [marque, setMarque] = useState('');
-  const [nomsite, setNomsite] = useState('');
   const [marque1, setMarque1] = useState([]);
-  const [village, setVillage] = useState('');
-  const [village1, setVillage1] = useState([]);
-  const [quartier, setQuartier] = useState('');
-  const [quartier1, setQuartier1] = useState([]);
   const [site, setSite] = useState('');
   const [site1, setSite1] = useState([]);
   const [typeSupport, setTypeSupport] = useState('');
@@ -54,8 +44,11 @@ export default function HomPage1({ navigation }) {
   const [surface, setSurface] = useState(null);
   const [switchEnabled, setSwitchEnabled] = useState(false);
   const [switchEnabled1, setSwitchEnabled1] = useState(false);
-  const [switchEnabled2, setSwitchEnabled2] = useState(false);
   
+  const { userInfo } = useContext(AuthContext);
+  const authToken = userInfo ? userInfo.access : null;
+
+
   // State for modal management
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedList, setSelectedList] = useState([]);
@@ -72,18 +65,16 @@ export default function HomPage1({ navigation }) {
         });
         
         setMarque1(response.data.marques.map((item) => ({ key: item, value: item })));
-        setVillage1(response.data.village.map((item) => ({ key: item, value: item })));
-        setQuartier1(response.data.quartiers.map((item) => ({ key: item, value: item })));
+        // setVillage1(response.data.village.map((item) => ({ key: item, value: item })));
+        // setQuartier1(response.data.quartiers.map((item) => ({ key: item, value: item })));
         setTypeSupport1(response.data.type_supports.map((item) => ({ key: item, value: item })));
-        setEntreprise(response.data.entreprise || '');
-        setCommune(response.data.commune || '');
+        
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
     fetchData();
   }, [authToken]);
-
 
   // Fetch data from API
   const fetchData = async (url, setter) => {
@@ -127,12 +118,6 @@ export default function HomPage1({ navigation }) {
     }
   };
 
-  const toggleSwitch2 = () => {
-    setSwitchEnabled2(prev => !prev);
-    if (!switchEnabled2) {
-      setVillage(''); // Reset Quartier
-    }
-  };
   // Open modal for selection
   const openModal = (field, data) => {
     setCurrentField(field);
@@ -176,98 +161,53 @@ export default function HomPage1({ navigation }) {
     setModalVisible(false);
   };
   // Navigate to next page
+
+  // Navigate to next page
   const navigateToHomePage2 = () => {
-    const dataFromHomePage1 = {
-      entreprise,
+    const { previousRouteName } = route.params;
+    let params;
+  
+    // Définir les paramètres en fonction de la route précédente
+    
+    // Données additionnelles
+    const dataFromHomePageAdd = {
       marque,
-      village,
       typeSupport,
       surface,
       canal,
       etatSupport,
       visibilite,
       site,
-      quartier,
-      nomsite,
       nombreface,
-      nombresupport,
-      commune
+      nombresupport
     };
-    navigation.navigate('HomPage2', { dataFromHomePage1 });
-  };
 
+    if (previousRouteName === "HomPage5") {
+      const { dataFromHomePage1,dataFromHomePage2,dataFromHomePage5 } = route.params;
+      params = { previousRouteName,dataFromHomePageAdd,dataFromHomePage2, dataFromHomePage1, dataFromHomePage5 };
+    } else {
+      const { dataFromHomePage1,dataFromHomePage2, dataFromHomePage3, dataFromHomePage4, dataFromHomePage5 } = route.params;
+      params = { previousRouteName,dataFromHomePageAdd,dataFromHomePage2, dataFromHomePage1, dataFromHomePage3, dataFromHomePage4, dataFromHomePage5 };
+    }
+    // Naviguer vers HomPage7 avec les paramètres définis
+    navigation.navigate('HomPage7', params);
+  };
+  
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView>
       <KeyboardAwareScrollView
-        contentContainerStyle={{ flexGrow: 2 }}
+        contentContainerStyle={{ flexGrow: 1 }}
         resetScrollToCoords={{ x: 0, y: 0 }}
-        scrollEnabled={true}
-        extraScrollHeight={100}
+        scrollEnabled={false}
       >
         <View style={styles.container}>
         <View style={styles.header}>
-            <Text style={styles.headerText}>Collecte des supports {entreprise} </Text>
+            <Text style={styles.headerText}>Ajout d'un autre support à ce site</Text>
           </View>
           {/* Frame for fields */}
           <View style={styles.frame}>
             <View style={styles.champ}>
               {/* Input Fields */}
-              {/* <View style={styles.saisi}>
-                <Pressable style={[styles.selectBox]} onPress={() => openModal('entreprise', entreprise1)}>
-                  <Text>{entreprise || 'Entreprise ...'}</Text>
-                </Pressable>
-              </View> */}
-              <View style={styles.saisi}>
-              {!switchEnabled2 && (
-                <Pressable style={styles.selectBox} onPress={() => openModal('village', village1)}>
-                  <Text>{village || 'Village ...'}</Text>
-                </Pressable>
-                )}
-                {switchEnabled2 && (
-                  <TextInput
-                    style={styles.inputs}
-                    placeholder='Village ...'
-                    placeholderTextColor={Colors.darkText}
-                    value={village}
-                    onChangeText={setVillage}
-                  />
-                )}
-                <Switch
-                  value={switchEnabled2}
-                  onValueChange={toggleSwitch2}
-                  style={{ marginTop: 10 }}
-                />
-              </View> 
-              <View style={styles.saisi}>
-                {!switchEnabled1 && (
-                  <Pressable style={styles.selectBox} onPress={() => openModal('quartier', quartier1)}>
-                    <Text>{quartier || 'Quartier ...'}</Text>
-                  </Pressable>
-                )}
-                {switchEnabled1 && (
-                  <TextInput
-                    style={styles.inputs}
-                    placeholder='Quartier ...'
-                    placeholderTextColor={Colors.darkText}
-                    value={quartier}
-                    onChangeText={setQuartier}
-                  />
-                )}  
-                <Switch
-                  value={switchEnabled1}
-                  onValueChange={toggleSwitch1}
-                  style={{ marginTop: 10 }}
-                />
-              </View>
-              <View style={styles.saisi}>
-              <TextInput
-                    style={styles.inputs}
-                    placeholder='Nom du site ...'
-                    placeholderTextColor={Colors.darkText}
-                    value={nomsite}
-                    onChangeText={setNomsite}
-                  />
-              </View>
               <View style={styles.saisi}>
                 <Pressable style={styles.selectBox} onPress={() => openModal('marque', marque1)}>
                   <Text>{marque || 'Marque ...'}</Text>
@@ -279,7 +219,6 @@ export default function HomPage1({ navigation }) {
                       <Text>{typeSupport || 'Type support ...'}</Text>
                     </Pressable>
                   )}
-
                   {switchEnabled && (
                     <>
                       <TextInput
@@ -297,6 +236,7 @@ export default function HomPage1({ navigation }) {
                         onChangeText={setSurface}
                         keyboardType='numeric'
                       />
+
                       <TextInput
                         style={styles.inputs}
                         placeholder='Nombre de face ...'
@@ -307,7 +247,6 @@ export default function HomPage1({ navigation }) {
                       />
                     </>
                   )}
-
                 <Switch
                   value={switchEnabled}
                   onValueChange={toggleSwitch}
@@ -322,19 +261,16 @@ export default function HomPage1({ navigation }) {
                 keyboardType='numeric'
               />
               </View>
-
               <View style={styles.saisi}>
                 <Pressable style={styles.selectBox} onPress={() => openModal('canal', canal1)}>
                   <Text>{canal || 'Canal ...'}</Text>
                 </Pressable>
               </View>
-
               <View style={styles.saisi}>
                 <Pressable style={styles.selectBox} onPress={() => openModal('etatSupport', etatSupport1)}>
                   <Text>{etatSupport || 'Etat support ...'}</Text>
                 </Pressable>
               </View>
-
               <View style={styles.saisi}>
                 <Pressable style={styles.selectBox} onPress={() => openModal('site', site1)}>
                   <Text>{site || 'Site ...'}</Text>
@@ -349,7 +285,7 @@ export default function HomPage1({ navigation }) {
             <View style={styles.btn1}>
               <TouchableOpacity style={styles.btn} onPress={navigateToHomePage2}>
                   <Text style={styles.btntxt}>Suivant </Text>
-                  <MaterialIcons name="navigate-next" style={[styles.iconeNext,{color:'white',fontWeight:'bold'}]} />
+                  <MaterialIcons name="navigate-next" style={styles.iconeNext} />
                 </TouchableOpacity>
           </View>
             {/* Modal for selection */}
@@ -385,7 +321,6 @@ export default function HomPage1({ navigation }) {
             </Animatable.View>
           </View>
         </Modal>
-
           </View>
         </View>
       </KeyboardAwareScrollView>
@@ -396,19 +331,36 @@ export default function HomPage1({ navigation }) {
 // Styles for components
 const styles = StyleSheet.create({
   container: {
-    flex:1,
-    paddingHorizontal: width / 14 ,
-    height: height*1.09,
+    paddingHorizontal: width / 20,
+    height: height,
     backgroundColor:'#F2F3F4',
-    marginVertical: 5,
-    elevation:2
+    marginVertical: 20
   },
-
+  header: {
+    backgroundColor: 'white', // Adjust color as needed
+    padding: Spacing.medium,
+    borderRadius: Spacing.small,
+    alignItems: 'center',
+    marginBottom: Spacing.medium,
+    height:'4%',
+    justifyContent:'center',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 0,
+  },
+  headerText: {
+    color: 'black',
+    fontSize: FontSize.large,
+    fontWeight: 'bold',
+  },
   btn1: {
     justifyContent: 'flex-end',
     flexDirection: 'row',
     borderRadius: Spacing,
-    marginTop:10
   },
   btn: {
     backgroundColor: '#008080',
@@ -417,7 +369,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderRadius: Spacing,
     width:'30%',
-    height:'160%'
+    height:'150%'
   },
   btntxt: {
     color: 'white',
@@ -443,7 +395,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     paddingHorizontal: Spacing.small,
     fontSize: FontSize.medium,
-    marginVertical: 2
+    marginVertical: '2%'
   },
   selectBox: {
     height: 50,
@@ -452,13 +404,13 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     justifyContent: 'center',
     paddingHorizontal: Spacing.small,
-    marginVertical: 2,
+    marginVertical: '3%',
     shadowOffset: {
       width: 0,
-      height: 0,
+      height: 2,
     },
-    shadowOpacity: 0,
-    shadowRadius: 2,
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
     elevation: 0,
   },
   nextButton: {
@@ -532,25 +484,5 @@ const styles = StyleSheet.create({
   },
   filledField: {
     backgroundColor: '#E6F7FF', // Soft color effect when the field is filled
-  },
-  header: {
-
-    padding: Spacing.medium,
-    borderRadius: Spacing.small,
-    alignItems: 'center',
-    marginBottom: Spacing.medium,
-    height:'4%',
-    justifyContent:'center',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.0,
-    shadowRadius: 4,
-    elevation: 0,
-  },
-  headerText: {
-    color: '#008080',
-    fontSize: FontSize.large,
   },
 });

@@ -38,7 +38,7 @@ export const AuthProvider =({children})=>{
     const login=(email,password)=>{
         setIsLoading(true);
         axios
-        .post('https://api.visitrack360.com/api/token/',{
+        .post('https://apitest.visitrack360.com/api/token/',{
             email,password
         }).then(res=>{
             let userInfo=res.data
@@ -79,7 +79,7 @@ export const AuthProvider =({children})=>{
     },[]);
 
     const userconnecte=(data)=>{
-        const url1="https://api.visitrack360.com/api/detailadimn/"
+        const url1="https://apitest.visitrack360.com/api/detailadimn/"
         useEffect(()=>{
             getListTrans();
             return()=>{

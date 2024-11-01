@@ -15,7 +15,6 @@ export default function HomePage4({ navigation, route }) {
   const [signature1, setSignature1] = useState('');
 
   const signatureRef = useRef(null);
-
   const handleSignature = (signature) => {
     setSignature1(signature);
   };
@@ -47,7 +46,7 @@ export default function HomePage4({ navigation, route }) {
     }
   };
 
-  const { dataFromHomePage1, dataFromHomePage2,dataFromHomePage3 } = route.params || {};
+  const { dataFromHomePage1, dataFromHomePage2,dataFromHomePage3,dataFromHomePage5 } = route.params || {};
 
   const handleSubmit = () => {
     const dataFromHomePage4 = {
@@ -56,7 +55,7 @@ export default function HomePage4({ navigation, route }) {
       contact1,
       signature1
     };
-    navigation.navigate('RecapPage', { dataFromHomePage1, dataFromHomePage2, dataFromHomePage3,dataFromHomePage4 });
+    navigation.navigate('RecapPage', { dataFromHomePage1, dataFromHomePage2, dataFromHomePage3,dataFromHomePage4, dataFromHomePage5});
   };
 
   return (
@@ -69,21 +68,21 @@ export default function HomePage4({ navigation, route }) {
             value={nom1}
             onChangeText={setNom1}
             style={styles.input}
-            mode="outlined"
+            
           />
           <TextInput
             label="Prénom ..."
             value={prenom1}
             onChangeText={setPrenom1}
             style={styles.input}
-            mode="outlined"
+            
           />
           <TextInput
             label="Contact ..."
             value={contact1}
             onChangeText={setContact1}
             style={styles.input}
-            mode="outlined"
+            
             keyboardType='numeric'
           />
 
@@ -99,7 +98,6 @@ export default function HomePage4({ navigation, route }) {
               webStyle={styles.signatureWebStyle}
             />
           </View>
-          
           <View style={styles.buttonsContainer}>
             <Button mode="contained" onPress={handleClear} style={styles.clearButton}>
               Effacer la signature
@@ -108,43 +106,48 @@ export default function HomePage4({ navigation, route }) {
               Enregistrer
             </Button>
           </View>
-          <View style={styles.btn1}>
+        </View>
+        <View style={styles.btn1}>
           <TouchableOpacity style={styles.btns} onPress={handleSubmit}>
             <Text style={styles.btntxt}>Terminé</Text>
-            <MaterialIcons name="check-circle" style={styles.iconNext} />
+            <MaterialIcons name="check-circle" style={styles.iconeNext} />
           </TouchableOpacity>
           </View>
-        </View>
       </SafeAreaView>
     </PaperProvider>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
     justifyContent: 'center',
+    marginHorizontal: 10
   },
   formContainer: {
-    paddingHorizontal: 20,
-    paddingBottom:5,
+    paddingHorizontal: Spacing * 2,
+    paddingBottom: Spacing * 2,
     alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    elevation: 5,
   },
   title: {
-    marginBottom: 20,
-    fontSize: 20,
+    marginBottom: Spacing * 2,
+    fontSize: FontSize.large,
     fontWeight: 'bold',
     color: '#333',
+    textAlign: 'center',
   },
   input: {
     width: '100%',
-    marginBottom: 20,
+    marginBottom: Spacing,
+    backgroundColor:'#e7deec'
   },
   signatureContainer: {
     width: '100%',
-    height: 300,
-    marginBottom: 20,
+    height: 270,
+    marginBottom: Spacing * 2,
     borderColor: '#000',
     borderWidth: 1,
     borderRadius: 10,
@@ -169,38 +172,21 @@ const styles = StyleSheet.create({
   `,
   buttonsContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     width: '100%',
-    marginTop: 10,
+    marginTop: Spacing,
   },
   clearButton: {
     backgroundColor: '#d32f2f',
-    width: '45%',
+    width: '48%',
   },
   saveButton: {
     backgroundColor: '#4CAF50',
-    width: '45%',
+    width: '48%',
   },
   btnContainer: {
-    marginTop: 20,
+    marginTop: Spacing * 3,
     alignItems: 'center',
-
-  },
-  doneButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#008080',
-    padding: 10,
-    borderRadius: 5,
-  },
-  doneButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    marginHorizontal: 10,
-  },
-  iconNext: {
-    color: '#fff',
-    fontSize: 20,
   },
   btn1: {
     justifyContent: 'center',
@@ -209,20 +195,24 @@ const styles = StyleSheet.create({
     paddingTop: 15,
   },
   btns: {
-    backgroundColor: '#008080',
+    backgroundColor: '#2c3e50',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
     borderRadius: Spacing,
-    width:'94%',
+    width:'90%',
     height:'150%'
   },
 
   btntxt: {
-    color: 'white',
-    textAlign: 'center',
+    color: '#fff',
     fontSize: FontSize.medium,
     fontFamily: Font['poppins-bold'],
-    fontWeight: '800'
+    fontWeight: 'bold',
+  },
+  iconeNext: {
+    fontSize: 26,
+    color: '#fff',
+    marginLeft: Spacing / 2,
   },
 });

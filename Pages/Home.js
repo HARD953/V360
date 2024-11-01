@@ -57,7 +57,7 @@ const Home = ({ navigation }) => {
   
   const patchData = async (id, updatedData) => {
     try {
-      await axios.patch(`https://api.visitrack360.com/api/donneescollectees/${id}/`, updatedData, {
+      await axios.patch(`https://apitest.visitrack360.com/api/donneescollectees/${id}/`, updatedData, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
@@ -100,7 +100,7 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://api.visitrack360.com/api/agent/', {
+        const response = await axios.get('https://apitest.visitrack360.com/api/agent/', {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
@@ -124,7 +124,7 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://api.visitrack360.com/api/statbyetat/', {
+        const response = await axios.get('https://apitest.visitrack360.com/api/statbyetat/', {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
@@ -393,7 +393,6 @@ const TouchableElement = ({
         <Text style={styles.detailLabel}>Type Support:</Text>
         <Text style={styles.detailValue}>{typeSupport}</Text>
       </View>
-
       <View style={styles.detailRow}>
         <Text style={styles.detailLabel}>Dimension:</Text>
         <Text style={styles.detailValue}>{surface}</Text>
@@ -574,7 +573,8 @@ const ElementEditForm = ({ selectedElement, handleEdit, handleSave, closeModal,i
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor:'white'
+      backgroundColor:'white',
+      height: height*4,
     },
     button: {
       flexDirection:'row',
@@ -605,6 +605,7 @@ const styles = StyleSheet.create({
   scrollViewContainer: {
     flexGrow: 1,
     paddingBottom: 20,
+    
   },
   mapContainer: {
     height: '28%',

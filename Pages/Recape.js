@@ -3,10 +3,11 @@ import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Image } from 'rea
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { AuthContext } from '../Components/globalContext';
+import { Alert } from 'react-native';
 
 const RecapPage = ({ navigation, route }) => {
   // Récupérer les données transmises depuis les écrans précédents
-  const { dataFromHomePage1, dataFromHomePage2, dataFromHomePage3, dataFromHomePage4 } = route.params;
+  const { dataFromHomePage1, dataFromHomePage2, dataFromHomePage3, dataFromHomePage4, dataFromHomePage5 } = route.params;
   const latitude = parseFloat(dataFromHomePage2['latitude']);
   const longitude = parseFloat(dataFromHomePage2['longitude']);
   const latitudeFixed = isNaN(latitude) ? 5.308616 : latitude;
@@ -16,78 +17,115 @@ const RecapPage = ({ navigation, route }) => {
 
   // Récupérer le nom de la route précédente
   const previousRouteName = navigation.getState().routes.slice(-2, -1)[0]?.name;
-
+  
   const handleSubmit = async () => {
     try {
       const formData = new FormData();
-      if (previousRouteName == "HomPage2")
+      const handleNaN = (value, defaultValue = 0) => {
+        return isNaN(value) ? defaultValue : value;
+      };
+
+      if (previousRouteName == "HomPage5")
       {
-      formData.append('entreprise', dataFromHomePage1['entreprise']);
+      formData.append('nomsite', dataFromHomePage1['nomsite']);
+      formData.append('village', dataFromHomePage1['village']);
+      formData.append('quartier', dataFromHomePage1['quartier']);
       formData.append('Marque', dataFromHomePage1['marque']);
-      formData.append('commune', dataFromHomePage1['commune']);
       formData.append('type_support', dataFromHomePage1['typeSupport']);
-      formData.append('surface', dataFromHomePage1['surface']);
-      formData.append('surfaceODP', dataFromHomePage2['SurfaceODP']);
+      formData.append('surface', handleNaN(parseFloat(dataFromHomePage1['surface'])));
+      formData.append('nombre_support', handleNaN(parseFloat(dataFromHomePage1['nombresupport'])));
+      formData.append('nombre_face', handleNaN(parseFloat(dataFromHomePage1['nombreface'])));
+      formData.append('surfaceODP', handleNaN(parseFloat(dataFromHomePage2['SurfaceODP'])));
       formData.append('canal', dataFromHomePage1['canal']);
       formData.append('etat_support', dataFromHomePage1['etatSupport']);
-      formData.append('site', dataFromHomePage1['site']);
+      formData.append('typesite', dataFromHomePage1['site']);
       formData.append('visibilite', dataFromHomePage1['visibilite']);
-      formData.append('duree', dataFromHomePage1['duree']);
-      formData.append('quartier', dataFromHomePage1['quartier']);
-      formData.append('description', dataFromHomePage2['emplacementExact']);
-      formData.append('observation', dataFromHomePage2['observation']);
+      formData.append('duree', handleNaN(parseFloat(dataFromHomePage2['duree'])));
       formData.append('ODP', dataFromHomePage2['value1']);
-      formData.append('tauxAP', dataFromHomePage2['AP']);
-      formData.append('tauxAPA', dataFromHomePage2['APA']);
-      formData.append('tauxAPT', dataFromHomePage2['APT']);
-      formData.append('tauxAE', dataFromHomePage2['AE']);
-      formData.append('tauxAEA', dataFromHomePage2['AEA']);
-      formData.append('tauxAET', dataFromHomePage2['AET']);
+      formData.append('AP', dataFromHomePage2['AP']);
+      formData.append('APA', dataFromHomePage2['APA']);
+      formData.append('APT', dataFromHomePage2['APT']);
+      formData.append('AE', dataFromHomePage2['AE']);
+      formData.append('AEA', dataFromHomePage2['AEA']);
+      formData.append('AET', dataFromHomePage2['AET']);
       formData.append('anciennete', dataFromHomePage2['value3']);
+      formData.append('description', dataFromHomePage5['emplacementExact']);
+      formData.append('observation', dataFromHomePage5['observation']);
+      formData.append('tauxCommune', dataFromHomePage5['isTauxCommune']);
+      formData.append('tauxRegion', dataFromHomePage5['isTauxRegion']);
+      formData.append('tauxDistrict', dataFromHomePage5['isTauxDistrict']);
       formData.append('latitude', latitudeFixed);
       formData.append('longitude', longitudeFixed);
-      if (dataFromHomePage2['image']) {
+      if (dataFromHomePage2.image.length === 2) {
         formData.append('image_support', {
-          uri: dataFromHomePage2['image'],
+          uri: dataFromHomePage2.image[0],
+          type: 'image/jpeg',
+          name: 'image.jpg',
+        });
+        
+        formData.append('image_support_s', {
+          uri: dataFromHomePage2.image[1],
+          type: 'image/jpeg',
+          name: 'image.jpg',
+        });
+      } else {
+        formData.append('image_support', {
+          uri: dataFromHomePage2.image[0],
           type: 'image/jpeg',
           name: 'image.jpg',
         });
       }
     }
 else {
-  formData.append('entreprise', dataFromHomePage1['entreprise']);
+      formData.append('nomsite', dataFromHomePage1['nomsite']);
+      formData.append('village', dataFromHomePage1['village']);
+      formData.append('quartier', dataFromHomePage1['quartier']);
       formData.append('Marque', dataFromHomePage1['marque']);
-      formData.append('commune', dataFromHomePage1['commune']);
       formData.append('type_support', dataFromHomePage1['typeSupport']);
-      formData.append('surface', dataFromHomePage1['surface']);
-      formData.append('surfaceODP', dataFromHomePage2['SurfaceODP']);
+      formData.append('surface', handleNaN(parseFloat(dataFromHomePage1['surface'])));
+      formData.append('nombre_support', handleNaN(parseFloat(dataFromHomePage1['nombresupport'])));
+      formData.append('nombre_face', handleNaN(parseFloat(dataFromHomePage1['nombreface'])));
+      formData.append('surfaceODP', handleNaN(parseFloat(dataFromHomePage2['SurfaceODP'])));
       formData.append('canal', dataFromHomePage1['canal']);
       formData.append('etat_support', dataFromHomePage1['etatSupport']);
-      formData.append('site', dataFromHomePage1['site']);
+      formData.append('typesite', dataFromHomePage1['site']);
       formData.append('visibilite', dataFromHomePage1['visibilite']);
-      formData.append('duree', dataFromHomePage1['duree']);
-      formData.append('quartier', dataFromHomePage1['quartier']);
-      formData.append('description', dataFromHomePage2['emplacementExact']);
-      formData.append('observation', dataFromHomePage2['observation']);
+      formData.append('duree', handleNaN(parseFloat(dataFromHomePage2['duree'])));
       formData.append('ODP', dataFromHomePage2['value1']);
-      formData.append('tauxAP', dataFromHomePage2['AP']);
-      formData.append('tauxAPA', dataFromHomePage2['APA']);
-      formData.append('tauxAPT', dataFromHomePage2['APT']);
-      formData.append('tauxAE', dataFromHomePage2['AE']);
-      formData.append('tauxAEA', dataFromHomePage2['AEA']);
-      formData.append('tauxAET', dataFromHomePage2['AET']);
+      formData.append('AP', dataFromHomePage2['AP']);
+      formData.append('APA', dataFromHomePage2['APA']);
+      formData.append('APT', dataFromHomePage2['APT']);
+      formData.append('AE', dataFromHomePage2['AE']);
+      formData.append('AEA', dataFromHomePage2['AEA']);
+      formData.append('AET', dataFromHomePage2['AET']);
       formData.append('anciennete', dataFromHomePage2['value3']);
-
+      formData.append('description', dataFromHomePage5['emplacementExact']);
+      formData.append('observation', dataFromHomePage5['observation']);
+      formData.append('tauxCommune', dataFromHomePage5['isTauxCommune']);
+      formData.append('tauxRegion', dataFromHomePage5['isTauxRegion']);
+      formData.append('tauxDistrict', dataFromHomePage5['isTauxDistrict']);
       formData.append('latitude', latitudeFixed);
       formData.append('longitude', longitudeFixed);
-      if (dataFromHomePage2['image']) {
-        formData.append('image_support', {
-          uri: dataFromHomePage2['image'],
-          type: 'image/jpeg',
-          name: 'image.jpg',
-        });
+          if (dataFromHomePage2.image.length === 2) {
+            formData.append('image_support', {
+              uri: dataFromHomePage2.image[0],
+              type: 'image/jpeg',
+              name: 'image.jpg',
+            });
+            
+            formData.append('image_support_s', {
+              uri: dataFromHomePage2.image[1],
+              type: 'image/jpeg',
+              name: 'image.jpg',
+            });
+          } else {
+            formData.append('image_support', {
+              uri: dataFromHomePage2.image[0],
+              type: 'image/jpeg',
+              name: 'image.jpg',
+            });
+          }
 
-      }
       formData.append('Rnom', dataFromHomePage3['nom']);
       formData.append('Rprenom', dataFromHomePage3['prenom']);
       formData.append('Rcontact', dataFromHomePage3['contact']);
@@ -111,7 +149,7 @@ else {
       }
 }
       const response = await axios.post(
-        'https://api.visitrack360.com/api/collectedata/',
+        'https://apitest.visitrack360.com/api/collectedata/',
         formData,
         {
           headers: {
@@ -120,34 +158,83 @@ else {
           },
         }
       );
-
-      if (response.status === 200) {
+      console.log(`Status: ${response.status}`);
+      if (response.status === 201) {
         console.log('Données soumises avec succès');
+        // Affiche l'alerte pour demander si l'utilisateur souhaite continuer
+        Alert.alert(
+          "Succès",
+          "Les données ont été soumises avec succès. Souhaitez-vous ajouter un autre support à ce site?",
+          [
+            {
+              text: "Non",
+              onPress: () => navigation.replace('SplashScreens')
+            },
+            {
+              text: "Oui",
+              onPress: () => {
+                // Détermine les paramètres en fonction de previousRouteName
+                if (previousRouteName === "HomPage5") {
+                  navigation.navigate("HomPage6", {
+                    previousRouteName,
+                    dataFromHomePage1,
+                    dataFromHomePage2,
+                    dataFromHomePage5
+                  });
+                } else {
+                  navigation.navigate("HomPage6", {
+                    previousRouteName,
+                    dataFromHomePage1,
+                    dataFromHomePage2,
+                    dataFromHomePage3,
+                    dataFromHomePage4,
+                    dataFromHomePage5
+                  });
+                }
+              }
+            }
+          ]
+        );
       }
     } catch (error) {
       console.error('Erreur lors de la soumission des données :', error);
     }
-    navigation.replace('SplashScreens');
   };
 
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Text style={styles.title}>Récapitulatif des informations</Text>
+        <Text style={styles.title}>Récapitulatif des informations {dataFromHomePage1["entreprise"]}</Text>
         {/* Cadre pour les informations */}
         <View style={styles.sectionContainer}>
           <Text style={styles.sectionTitle}>Informations générales</Text>  
-        <View style={styles.infoContainer}>
+        {/* <View style={styles.infoContainer}>
           <Text style={styles.label}>Entreprise:</Text>
           <Text style={styles.value}>{dataFromHomePage1["entreprise"]}</Text>
+        </View> */}
+        <View style={styles.infoContainer}>
+          <Text style={styles.label}>Nom du site:</Text>
+          <Text style={styles.value}>{dataFromHomePage1["nomsite"]}</Text>
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Marque:</Text>
           <Text style={styles.value}>{dataFromHomePage1["marque"]}</Text>
         </View>
         <View style={styles.infoContainer}>
-          <Text style={styles.label}>Commune:</Text>
-          <Text style={styles.value}>{dataFromHomePage1["commune"]}</Text>
+          <Text style={styles.label}>Village:</Text>
+          <Text style={styles.value}>{dataFromHomePage1["village"]}</Text>
+        </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.label}>Quartier:</Text>
+          <Text style={styles.value}>{dataFromHomePage1["quartier"]}</Text>
+        </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.label}>Nombre de face:</Text>
+          <Text style={styles.value}>{dataFromHomePage1["nombreface"]}</Text>
+        </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.label}>Nombre de support:</Text>
+          <Text style={styles.value}>{dataFromHomePage1["nombresupport"]}</Text>
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Type de support:</Text>
@@ -179,18 +266,19 @@ else {
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Durée:</Text>
-          <Text style={styles.value}>{dataFromHomePage1["duree"]}</Text>
+          <Text style={styles.value}>{dataFromHomePage2["duree"]}</Text>
         </View>
-        <View style={styles.infoContainer}>
+        {/* <View style={styles.infoContainer}>
           <Text style={styles.label}>Emplacement exact:</Text>
-          <Text style={styles.value}>{dataFromHomePage2["emplacementExact"]}</Text>
+          <Text style={styles.value}>{dataFromHomePage5["emplacementExact"]}</Text>
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Observation:</Text>
-          <Text style={styles.value}>{dataFromHomePage2["observation"]}</Text>
-        </View>
+          <Text style={styles.value}>{dataFromHomePage5["observation"]}</Text>
+        </View> */}
         </View>
         {/* Cadre pour les options ODP et coordonnées */}
+        
         <View style={styles.sectionContainer}>
         <Text style={styles.sectionTitle}>Options ODP et coordonnées</Text>
         <View style={styles.infoContainer}>
@@ -234,13 +322,34 @@ else {
           <Text style={styles.value}>{longitudeFixed}</Text>
         </View>
         </View>
-
-        {previousRouteName !== "HomPage2" && (
+        <View style={styles.sectionContainer}>
+        <Text style={styles.sectionTitle}>Autres Informations</Text>
+        <View style={styles.infoContainer}>
+          <Text style={styles.label}>Emplacement exact:</Text>
+          <Text style={styles.value}>{dataFromHomePage5["emplacementExact"]}</Text>
+        </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.label}>Observation:</Text>
+          <Text style={styles.value}>{dataFromHomePage5["observation"]}</Text>
+        </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.label}>Taxe communale:</Text>
+          <Text style={styles.value}>{dataFromHomePage5["isTauxCommune"] ? 'Oui' : 'Non'}</Text>
+        </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.label}>Taxe Régionale:</Text>
+          <Text style={styles.value}>{dataFromHomePage5["isTauxRegion"] ? 'Oui' : 'Non'}</Text>
+        </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.label}>Taxe du district:</Text>
+          <Text style={styles.value}>{dataFromHomePage5["isTauxDistrict"] ? 'Oui' : 'Non'}</Text>
+        </View>
+        </View>
+        {previousRouteName !== "HomPage5" && (
         <>
         {/* Cadre pour les images */}
         <View style={styles.sectionContainer}>
           <Text style={styles.sectionTitle}>Informations de Consentement</Text>
-
           <View style={styles.infoContainer}>
             <Text style={styles.label}>Nom Responsable:</Text>
             <Text style={styles.value}>{dataFromHomePage3["nom"]}</Text>
@@ -269,12 +378,19 @@ else {
           {/* Cadre pour les images */}
         <View style={styles.sectionContainer}>
           <Text style={styles.sectionTitle}>Images</Text>
-
-          <View style={styles.imageContainer1}>
+          <ScrollView style={styles.imageContainer1} horizontal={true}>
             <View style={styles.imageContainer}>
-              {dataFromHomePage2["image"] && (
+              {dataFromHomePage2?.image[0] && (
                 <Image
-                  source={{ uri: dataFromHomePage2["image"] }}
+                  source={{ uri: dataFromHomePage2.image[0] }}
+                  style={styles.image}
+                />
+              )}
+            </View>
+            <View style={styles.imageContainer}>
+              {dataFromHomePage2.image[1] && (
+                <Image
+                  source={{ uri: dataFromHomePage2.image[1] }}
                   style={styles.image}
                 />
               )}
@@ -295,26 +411,33 @@ else {
               />
             )}
           </View>
-          </View>
+          </ScrollView>
           </View>
         </>
       )}
-      {previousRouteName == "HomPage2" && (
+      {previousRouteName == "HomPage5" && (
         <>
         {/* Cadre pour les images */}
         <View style={styles.sectionContainer}>
           <Text style={styles.sectionTitle}>Images</Text>
-
-        <View style={styles.imageContainer1}>
-          <View style={styles.imageContainer}>
-            {dataFromHomePage2["image"] && (
-              <Image
-                source={{ uri: dataFromHomePage2["image"] }}
-                style={styles.image}
-              />
-            )}
-          </View>
-        </View>
+        <ScrollView style={styles.imageContainer1} horizontal={true}>
+        <View style={styles.imageContainer}>
+              {dataFromHomePage2?.image[0] && (
+                <Image
+                  source={{ uri: dataFromHomePage2.image[0] }}
+                  style={styles.image}
+                />
+              )}
+            </View>
+            <View style={styles.imageContainer}>
+              {dataFromHomePage2?.image[1] && (
+                <Image
+                  source={{ uri: dataFromHomePage2.image[1] }}
+                  style={styles.image}
+                />
+              )}
+            </View>
+        </ScrollView>
         </View>
         </>)}
       </ScrollView>
@@ -339,7 +462,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    color: 'red',
+    color: '#008080',
   },
   infoContainer: {
     flexDirection: 'row',
@@ -351,7 +474,7 @@ const styles = StyleSheet.create({
   },
   value: {},
   submitButton: {
-    backgroundColor: '#5D6D7E',
+    backgroundColor: '#2c3e50',
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
@@ -360,17 +483,18 @@ const styles = StyleSheet.create({
   },
   submitText: {
     color: 'white',
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: 'bold',
     marginRight: 10,
   },
   imageContainer: {
     alignItems: 'center',
     marginBottom: 20,
+    marginHorizontal:2
   },
   imageContainer1: {
     flexDirection: 'row',
-    alignItems: 'center',
+    // alignItems: 'center',
     marginBottom: 20,
   },
   image: {

@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet, View, Alert, TouchableOpacity, Text } from 'r
 import { TextInput, Button, Title, Provider as PaperProvider } from 'react-native-paper';
 import SignatureScreen from 'react-native-signature-canvas';
 import { MaterialIcons } from '@expo/vector-icons';
-
+import Colors from '../constants/Colors';
 import Font from '../constants/Font';
 import FontSize from '../constants/FontSize';
 import Spacing from '../constants/Spacing';
@@ -19,29 +19,25 @@ export default function HomePage3({ navigation, route }) {
 
   const handleSignature = (signature) => {
     setSignature(signature);
-   // Vous pouvez gérer la signature comme nécessaire
   };
-
   const handleClear = () => {
     if (signatureRef.current) {
       signatureRef.current.clearSignature();
-      setSignature(''); // Réinitialiser la signature dans l'état
-      setSignatureKey(Math.random()); // Réinitialiser la clé pour forcer la réinitialisation de SignatureScreen
+      setSignature('');
+      setSignatureKey(Math.random());
     }
   };
+
   const handleSave = async () => {
     if (signatureRef.current) {
-        Alert.alert('Succès', 'La signature a été enregistrée avec succès!');
+      Alert.alert('Succès', 'La signature a été enregistrée avec succès!');
       try {
         const savedSignature = await signatureRef.current.readSignature();
         if (savedSignature) {
           setSignature(savedSignature);
           Alert.alert('Succès', 'La signature a été enregistrée avec succès!');
-        } else {
-          console.log('Aucune signature à enregistrer.');
         }
       } catch (error) {
-        console.error('Erreur lors de l\'enregistrement de la signature:', error);
         Alert.alert('Erreur', 'Une erreur est survenue lors de l\'enregistrement de la signature.');
       }
     } else {
@@ -49,7 +45,7 @@ export default function HomePage3({ navigation, route }) {
     }
   };
 
-  const { dataFromHomePage1, dataFromHomePage2 } = route.params || {};
+  const { dataFromHomePage1, dataFromHomePage2,dataFromHomePage5 } = route.params || {};
 
   const handleSubmit = () => {
     const dataFromHomePage3 = {
@@ -58,36 +54,30 @@ export default function HomePage3({ navigation, route }) {
       contact,
       signature
     };
-    navigation.navigate('HomePage4', { dataFromHomePage1, dataFromHomePage2, dataFromHomePage3 });
+    navigation.navigate('HomePage4', { dataFromHomePage1, dataFromHomePage2, dataFromHomePage3,dataFromHomePage5 });
   };
-
   return (
     <PaperProvider>
-      
       <SafeAreaView style={styles.container}>
-        
         <View style={styles.formContainer}>
-          <Title style={styles.title}>Consentement responsable espace</Title>
+          <Title style={styles.title}>Consentement superviseur</Title>
           <TextInput
             label="Nom ..."
             value={nom}
             onChangeText={setNom}
             style={styles.input}
-            mode="outlined"
           />
           <TextInput
             label="Prénom ..."
             value={prenom}
             onChangeText={setPrenom}
             style={styles.input}
-            mode="outlined"
           />
           <TextInput
             label="Contact ..."
             value={contact}
             onChangeText={setContact}
             style={styles.input}
-            mode="outlined"
             keyboardType='numeric'
           />
           <View style={styles.signatureContainer}>
@@ -102,7 +92,6 @@ export default function HomePage3({ navigation, route }) {
               webStyle={styles.signatureWebStyle}
             />
           </View>
-          
           <View style={styles.buttonsContainer}>
             <Button mode="contained" onPress={handleClear} style={styles.clearButton}>
               Effacer la signature
@@ -122,32 +111,37 @@ export default function HomePage3({ navigation, route }) {
     </PaperProvider>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
     justifyContent: 'center',
+    marginHorizontal: 10
   },
   formContainer: {
-    paddingHorizontal: 20,
-    paddingBottom:5,
+    paddingHorizontal: Spacing * 2,
+    paddingBottom: Spacing * 2,
     alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    elevation: 5,
   },
   title: {
-    marginBottom: 20,
-    fontSize: 20,
+    marginBottom: Spacing * 2,
+    fontSize: FontSize.large,
     fontWeight: 'bold',
     color: '#333',
+    textAlign: 'center',
   },
   input: {
     width: '100%',
-    marginBottom: 10,
+    marginBottom: Spacing,
+    backgroundColor:'#e7deec'
   },
   signatureContainer: {
     width: '100%',
-    height: 300,
-    marginBottom: 20,
+    height: 270,
+    marginBottom: Spacing * 2,
     borderColor: '#000',
     borderWidth: 1,
     borderRadius: 10,
@@ -172,58 +166,47 @@ const styles = StyleSheet.create({
   `,
   buttonsContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     width: '100%',
-    marginTop: 10,
+    marginTop: Spacing,
   },
   clearButton: {
     backgroundColor: '#d32f2f',
-    width: '45%',
+    width: '48%',
   },
   saveButton: {
     backgroundColor: '#4CAF50',
-    width: '45%',
+    width: '48%',
   },
   btnContainer: {
-    marginTop: 20,
+    marginTop: Spacing * 3,
     alignItems: 'center',
-  },
-  doneButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#5D6D7E',
-    padding: 10,
-    borderRadius: 5,
-  },
-  doneButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    marginHorizontal: 10,
   },
   btn1: {
     justifyContent: 'center',
     flexDirection: 'row',
     borderRadius: Spacing,
-    paddingTop:7
+    paddingTop: 15,
   },
   btns: {
-    backgroundColor: '#5D6D7E',
+    backgroundColor: '#008080',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
     borderRadius: Spacing,
-    width:'86%',
-    height:'130%'
+    width:'90%',
+    height:'150%'
   },
+
   btntxt: {
-    color: 'white',
-    textAlign: 'center',
+    color: '#fff',
     fontSize: FontSize.medium,
     fontFamily: Font['poppins-bold'],
-    fontWeight: '800'
+    fontWeight: 'bold',
   },
   iconeNext: {
     fontSize: 26,
-    color: 'white',
+    color: '#fff',
+    marginLeft: Spacing / 2,
   },
 });

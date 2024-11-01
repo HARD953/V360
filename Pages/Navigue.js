@@ -8,8 +8,12 @@ import HomPage1 from './HomePage1';
 import HomPage2 from './HomePage2';
 import HomePage3 from './HomePage3';
 import HomePage4 from './HomePage4';
+import HomePage5 from './HomePage5';
+import HomePage6 from './HomePage6';
+import HomePage7 from './HomePage7';
 import Home from './Home';
 import RecapPage from './Recape';
+import RecapPage2 from './Recape2';
 import ProfilePage from './Profile';
 import SplashScreens from './Splashsubmit';
 import Voir from './Voir';
@@ -17,7 +21,6 @@ import LoginPage from './LoginPage';
 // import YourComponent1 from './Pages/Coordonne';
   
 const Stack = createStackNavigator();
-
 
 const CustomHeaderTitle = ({ title }) => (
   <View style={styles.headerTitleContainer}>
@@ -27,7 +30,6 @@ const CustomHeaderTitle = ({ title }) => (
 
 export default function Navigue({ navigation }) {
   const { loading,logout }=useContext(AuthContext)
-
   return (
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="LoginPage" component={LoginPage} options={{ headerShown: false }}/>
@@ -37,9 +39,9 @@ export default function Navigue({ navigation }) {
           options={({ navigation }) => ({
             headerShown: true,
             headerStyle: {
-              backgroundColor: '#5D6D7E',
+              backgroundColor: '#008080',
               },
-            headerTintColor: '#5D6D7E',
+            headerTintColor: '#008080',
             headerRight: () => (
               <Ionicons
                 name="log-out-outline" 
@@ -60,7 +62,7 @@ export default function Navigue({ navigation }) {
                         title: '',
                         headerShown: true,
                         headerStyle: {
-                        backgroundColor: '#5D6D7E',
+                        backgroundColor: '#008080',
                         },
                         headerTintColor: 'white',
                         headerTitleStyle: {
@@ -81,7 +83,7 @@ export default function Navigue({ navigation }) {
         <Stack.Screen name="HomPage2" component={HomPage2} options={({ navigation }) => ({
                         title: '',
                         headerStyle: {
-                        backgroundColor: '#5D6D7E',
+                        backgroundColor: '#008080',
                         },
                         headerTintColor: 'white',
                         headerTitleStyle: {
@@ -103,7 +105,7 @@ export default function Navigue({ navigation }) {
                         
                         title: '',
                         headerStyle: {
-                        backgroundColor: '#5D6D7E',
+                        backgroundColor: '#008080',
                         },
                         headerTintColor: 'white',
                         headerTitleStyle: {
@@ -125,7 +127,7 @@ export default function Navigue({ navigation }) {
                         
                         title: '',
                         headerStyle: {
-                        backgroundColor: '#5D6D7E',
+                        backgroundColor: '#008080',
                         },
                         headerTintColor: 'white',
                         headerTitleStyle: {
@@ -144,10 +146,30 @@ export default function Navigue({ navigation }) {
                 ),
         })}/>
         <Stack.Screen name="RecapPage" component={RecapPage} options={({ navigation }) => ({
-                        
                         title: '',
                         headerStyle: {
-                        backgroundColor: '#5D6D7E',
+                        backgroundColor: '#008080',
+                        },
+                        headerTintColor: 'white',
+                        headerTitleStyle: {
+                        fontWeight: 'bold',
+                        },
+                        headerRight: () => (
+                        <Ionicons
+                            name="log-out-outline"
+                            size={30}
+                            color="white"
+                            style={{ marginRight: 20 }}
+                            onPress={() => {
+                            logout()
+                    }}
+                />
+                ),
+        })}/>
+        <Stack.Screen name="RecapPage2" component={RecapPage2} options={({ navigation }) => ({
+                        title: '',
+                        headerStyle: {
+                        backgroundColor: '#008080',
                         },
                         headerTintColor: 'white',
                         headerTitleStyle: {
@@ -168,7 +190,76 @@ export default function Navigue({ navigation }) {
         <Stack.Screen name="ProfilePage" component={ProfilePage} options={({ navigation }) => ({
                         title: 'Lanfiatech',
                         headerStyle: {
-                        backgroundColor: '#5D6D7E',
+                        backgroundColor: '#008080',
+                        },
+                        headerTintColor: 'white',
+                        headerTitleStyle: {
+                        fontWeight: 'bold',
+                        },
+                        
+                        headerRight: () => (
+                        <Ionicons
+                            name="log-out-outline"
+                            size={30}
+                            color="white"
+                            style={{ marginRight: 20 }}
+                            onPress={() => {
+                            logout()
+                    }}
+                />
+                
+                ),
+        })}/>
+        <Stack.Screen name="HomPage5" component={HomePage5} options={({ navigation }) => ({
+                        title: 'Lanfiatech',
+                        headerStyle: {
+                        backgroundColor: '#008080',
+                        },
+                        headerTintColor: 'white',
+                        headerTitleStyle: {
+                        fontWeight: 'bold',
+                        },
+                        
+                        headerRight: () => (
+                        <Ionicons
+                            name="log-out-outline"
+                            size={30}
+                            color="white"
+                            style={{ marginRight: 20 }}
+                            onPress={() => {
+                            logout()
+                    }}
+                />
+                
+                ),
+        })}/>
+        <Stack.Screen name="HomPage6" component={HomePage6} options={({ navigation }) => ({
+                        title: 'Lanfiatech',
+                        headerStyle: {
+                        backgroundColor: '#008080',
+                        },
+                        headerTintColor: 'white',
+                        headerTitleStyle: {
+                        fontWeight: 'bold',
+                        },
+                        
+                        headerRight: () => (
+                        <Ionicons
+                            name="log-out-outline"
+                            size={30}
+                            color="white"
+                            style={{ marginRight: 20 }}
+                            onPress={() => {
+                            logout()
+                    }}
+                />
+                
+                ),
+        })}/>
+        <Stack.Screen name="HomPage7" component={HomePage7} options={({ navigation }) => ({
+                        title: 'Lanfiatech',
+                        headerStyle: {
+                        backgroundColor: '#008080',
                         },
                         headerTintColor: 'white',
                         headerTitleStyle: {
@@ -191,7 +282,7 @@ export default function Navigue({ navigation }) {
         <Stack.Screen name="Voir" component={Voir} options={({ navigation }) => ({
                         title: 'Lanfiatech',
                         headerStyle: {
-                        backgroundColor: '#5D6D7E',
+                        backgroundColor: '#008080',
                         },
                         headerTintColor: 'white',
                         headerTitleStyle: {
@@ -208,10 +299,8 @@ export default function Navigue({ navigation }) {
                             logout()
                     }}
                 />
-                
                 ),
         })}/>
-        
         <Stack.Screen name="SplashScreens" component={SplashScreens} options={{ headerShown: false }}/>
       </Stack.Navigator> 
   );

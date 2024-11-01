@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, TextInput, Text, View,Alert, TouchableOpacity, Dimensions, Image, Modal, Button,ScrollView } from 'react-native';
+import { SafeAreaView, StyleSheet, TextInput, Text, View, TouchableOpacity, Dimensions, Image, Modal, Button, ScrollView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Switch } from 'react-native-switch';
 import * as Location from 'expo-location';
@@ -14,7 +14,6 @@ const { height, width } = Dimensions.get("screen");
 
 export default function HomPage2({ navigation, route }) {
   const [value1, setValue] = useState(false); // Pour le commutateur ODP
-
   const [value3, setValue3] = useState(false);
   const [AP, setAP] = useState(false);
   const [APA, setAPA] = useState(false);
@@ -22,7 +21,7 @@ export default function HomPage2({ navigation, route }) {
   const [AE, setAE] = useState(false);
   const [AEA, setAEA] = useState(false);
   const [AET, setAET] = useState(false);
-  const [image, setImage] = useState([]);
+  const [image, setImage] = useState(null);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [SurfaceODP, setSurfaceODP] = useState(null);
@@ -49,11 +48,11 @@ export default function HomPage2({ navigation, route }) {
     setSignature(signature);
     setSignatureModalVisible(false);
   };
-  
+
   const handleClear = () => {
     setSignature(null);
   };
-  
+
   const getLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
 
@@ -67,6 +66,7 @@ export default function HomPage2({ navigation, route }) {
     setLatitude(currentLocation.coords.latitude);
     setLongitude(currentLocation.coords.longitude);
   };
+
   const getPermission = async () => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
 
@@ -76,42 +76,38 @@ export default function HomPage2({ navigation, route }) {
   };
 
   const pickImage = async () => {
-    if (image.length >= 2) {
-      Alert.alert('Limite atteinte', 'Vous ne pouvez ajouter que deux images.');
-      return;
-    }
-    await getPermission();
+    getPermission();
+
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
+
     if (!result.canceled) {
-      setImage([...image, result.assets[0].uri]);
+      setImage(result.assets[0].uri);
     }
   };
-
   const takePhoto = async () => {
-    if (image.length >= 2) {
-      Alert.alert('Limite atteinte', 'Vous ne pouvez ajouter que deux images.');
-      return;
-    }
-    await getPermission();
+    getPermission();
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
     if (!result.canceled) {
-      setImage([...image, result.assets[0].uri]);
+      setImage(result.assets[0].uri);
     }
   };
+  const { dataFromHomePage1,dataFromHomePageAdd } = route.params;
 
-  
-  const { dataFromHomePage1 } = route.params;
-  const handleSubmit = () => {
-    const dataFromHomePage2 = {
+
+  const handleSubmitRecap7 = () => {
+    const { previousRouteName,dataFromHomePageAdd } = route.params;
+    console.log(dataFromHomePageAdd)
+    let params;
+    const dataFromHomePageAdd2 = {
       SurfaceODP,
       value1,
       value3,
@@ -126,21 +122,29 @@ export default function HomPage2({ navigation, route }) {
       longitude,
       duree
     };
-    navigation.navigate('HomPage5', { dataFromHomePage1, dataFromHomePage2 });
+    if (previousRouteName === "HomPage5") {
+      const { dataFromHomePage1,dataFromHomePage2, dataFromHomePage5 } = route.params;
+      params = { previousRouteName,dataFromHomePageAdd2,dataFromHomePage2,dataFromHomePageAdd, dataFromHomePage1, dataFromHomePage5 };
+    } else {
+      const { dataFromHomePage1,dataFromHomePage2, dataFromHomePage3, dataFromHomePage4, dataFromHomePage5 } = route.params;
+      params = { previousRouteName,dataFromHomePageAdd2,dataFromHomePage2,dataFromHomePageAdd, dataFromHomePage1, dataFromHomePage3, dataFromHomePage4, dataFromHomePage5 };
+    }
+    // Naviguer vers HomPage7 avec les paramètres définis
+    navigation.navigate('RecapPage2', params);
   };
   return (
     <SafeAreaView>
       <View style={styles.container}>
-      <View style={styles.saisi}>
-              <TextInput
-                style={styles.inputs}
-                placeholder="Durée d'installation"
-                placeholderTextColor={Colors.darkText}
-                keyboardType='numeric'
-                value={duree}
-                onChangeText={(text)=> setDuree(text)}
-              />
-            </View>
+        <View style={styles.saisi}>
+          <TextInput
+            style={styles.inputs}
+            placeholder="Durée d'installation"
+            placeholderTextColor={Colors.darkText}
+            keyboardType='numeric'
+            value={duree}
+            onChangeText={setDuree}
+          />
+        </View>
         <View style={styles.champ}>
           {value1 && (
             <View style={styles.saisi}>
@@ -150,10 +154,11 @@ export default function HomPage2({ navigation, route }) {
                 placeholderTextColor={Colors.darkText}
                 keyboardType='numeric'
                 value={SurfaceODP}
-                onChangeText={(text) => setSurfaceODP(text)}
+                onChangeText={setSurfaceODP}
               />
             </View>
           )}
+
           <View style={styles.imView1}>
             <View style={styles.swi}>
               <Text style={styles.textOPD}>Nouveau ?</Text>
@@ -264,10 +269,8 @@ export default function HomPage2({ navigation, route }) {
               </TouchableOpacity>
             </View>
             <View style={styless.imageContainer}>
-            {image.map((imgUri, index) => (
-              <Image key={index} source={{ uri: imgUri }} style={styless.imagePreview} />
-            ))}
-          </View>
+              {image && <Image source={{ uri: image }} style={styless.imagePreview} />}
+            </View>
           </View>
           <View style={styles.MapView}>
             <MaterialIcons name="my-location" style={styles.iconeLoc} />
@@ -279,14 +282,70 @@ export default function HomPage2({ navigation, route }) {
               <Text style={styles.getLocationButtonText}>Coordonnée</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.btn1}>
-          <TouchableOpacity style={styles.btns} onPress={handleSubmit}>
-            <Text style={styles.btntxt}>Suivant</Text>
-            <MaterialIcons name="navigate-next" style={styles.iconeNext} />
+          {/* <View style={styles.btn1}>
+          <TouchableOpacity style={styles.btnt} onPress={handleSubmit1}>
+            <Text style={styles.btntxt}>Terminer</Text>
+            <MaterialIcons name="check-circle" style={styles.iconeNext} />
           </TouchableOpacity>
-          </View>        
+          </View> */}
+          <View style={styles.btn1}>
+            <TouchableOpacity style={styles.btns} onPress={handleSubmitRecap7}>
+              <Text style={styles.btntxt}>Terminer</Text>
+              <MaterialIcons name="navigate-next" style={styles.iconeNext} />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
+      {signature && (
+        <View >
+          <Image
+            source={{ uri: signature }}
+            style={styles.signatureImage}
+          />
+          <Button title="Effacer" onPress={handleClear} />
+        </View>
+      )}
+      <Modal visible={isSignatureModalVisible} animationType="slide">
+        <View style={{ height: '70%', paddingTop: '10%' }}>
+          <SignatureScreen
+            onOK={handleSignature}
+            onEmpty={() => console.log('Empty')}
+            descriptionText="Sign"
+            clearText="Effacer"
+            confirmText="Enregistrer"
+            webStyle={styles.signatureCanvas}
+          />
+          <Button title="Fermer" onPress={() => setSignatureModalVisible(false)} />
+        </View>
+      </Modal>
+      <Modal visible={isModalVisible} animationType="slide" transparent={true}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <TextInput
+              // style={styles.inputs}
+              placeholder="Nom1"
+              placeholderTextColor={Colors.darkText}
+              value={nom1}
+              onChangeText={(text) => setNom1(text)}
+            />
+            <TextInput
+              // style={styles.inputs}
+              placeholder="Nom2"
+              placeholderTextColor={Colors.darkText}
+              value={nom2}
+              onChangeText={(text) => setNom2(text)}
+            />
+            <TextInput
+              // style={styles.inputs}
+              placeholder="Nom3"
+              placeholderTextColor={Colors.darkText}
+              value={nom3}
+              onChangeText={(text) => setNom3(text)}
+            />
+            <Button title="Fermer" onPress={() => setModalVisible(false)} />
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -315,23 +374,21 @@ const styless = StyleSheet.create({
     paddingRight: 10,
   },
   iconeImage: {
-    fontSize: 20, // Ajustez la taille de l'icône ici
+    fontSize: 25, // Ajustez la taille de l'icône ici
     color: '#5D6D7E',
-    },
-    imageContainer: {
-      flexDirection:'row',
-      alignItems: 'center',
-      justifyContent: 'flex-start',
-      width: '100%',
-      
-    },
-    imagePreview: {
-      marginBottom: 10,
-      marginHorizontal:1,
-      width: '30%',
-      height: 60,
-      resizeMode: 'contain', // Utilisez "contain" ou "cover" en fonction de vos besoins
-    },
+  },
+  imageContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '70%',
+  },
+  imagePreview: {
+    marginBottom: 10,
+    width: '100%',
+    height: '95%',
+    resizeMode: 'contain', // Utilisez "contain" ou "cover" en fonction de vos besoins
+    marginTop: 20,
+  },
   buttonText: {
     fontWeight: '500'
   },
@@ -361,24 +418,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: width / 8,
   },
   champ: {
-    height: "74%",
+    height: "80%",
     justifyContent: 'space-around',
   },
   saisi: {
     height: "8%",
+    paddingBottom: '0%',
   },
   inputs: {
     height: 50,
-    borderBottomWidth:1,
+    borderBottomWidth: 1,
     borderColor: Colors.border,
     borderRadius: 2,
     justifyContent: 'center',
     paddingHorizontal: Spacing.small,
+    marginVertical: 2,
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0,
     shadowRadius: 4,
     elevation: 0,
   },
@@ -404,11 +463,11 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: 'center',
     paddingHorizontal: Spacing * 0.5,
-    paddingBottom:'3%'
+    paddingBottom: '3%'
   },
   imView: {
     flexDirection: 'row', // Ajout de flexDirection
-    height: "18%",
+    height: "15%",
     alignItems: 'center',
     justifyContent: 'flex-start',
     borderWidth: 2, // Épaisseur de la bordure augmentée
@@ -452,12 +511,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
     paddingVertical: "2%",
+
   },
   btn1: {
     justifyContent: 'center',
     flexDirection: 'row',
     borderRadius: Spacing,
-    
   },
   btnt: {
     backgroundColor: '#008080',
@@ -465,8 +524,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     borderRadius: Spacing,
-    width:'100%',
-    height:'170%'
+    width: '100%',
+    height: '170%'
   },
   btntxt: {
     color: 'white',
@@ -496,16 +555,17 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
   },
   modalContainer: {
+
     justifyContent: 'center',
     alignItems: 'center',
-    height:'10%'
+    height: '10%'
   },
   modalContent: {
     backgroundColor: 'white',
     padding: 20,
     borderRadius: 10,
     width: '80%',
-    
+
     flexDirection: 'column', // Utilisez flexDirection: 'column' pour disposer les éléments en colonnes
     alignItems: 'center', // Alignez les éléments au centre de la colonne
   },
@@ -516,8 +576,8 @@ const styles = StyleSheet.create({
     // marginVertical: 100,
     // backgroundColor:'red'
   },
- signatureImage: {
-    
+  signatureImage: {
+
     // resizeMode: 'contain',
     // borderWidth: 1,
     // borderColor: '#000',
@@ -526,21 +586,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     borderRadius: Spacing,
- 
+
   },
   btns: {
-    backgroundColor: '#008080',
+    backgroundColor: '#2c3e50',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
     borderRadius: Spacing,
-    width:'100%',
-    height:'170%'
+    width: '100%',
+    height: '170%'
   },
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor:'red',
+    backgroundColor: 'red',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },

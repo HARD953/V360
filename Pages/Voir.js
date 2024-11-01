@@ -60,7 +60,7 @@ const Voir = ({ navigation }) => {
 
   const patchData = async (id, updatedData) => {
     try {
-      await axios.patch(`https://api.visitrack360.com/api/donneescollectees/${id}/`, updatedData, {
+      await axios.patch(`https://apitest.visitrack360.com/api/donneescollectees/${id}/`, updatedData, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
@@ -105,7 +105,7 @@ const Voir = ({ navigation }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://api.visitrack360.com/api/donneescollecteesall/', {
+        const response = await axios.get('https://apitest.visitrack360.com/api/donneescollecteesall/', {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
@@ -129,7 +129,7 @@ const Voir = ({ navigation }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://api.visitrack360.com/api/statbyetatall/', {
+        const response = await axios.get('https://apitest.visitrack360.com/api/statbyetatall/', {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
@@ -182,7 +182,6 @@ const Voir = ({ navigation }) => {
       </View>
     );
   }
-
   if (error) {
     return (
       <View style={styles.errorContainer}>
@@ -190,7 +189,6 @@ const Voir = ({ navigation }) => {
       </View>
     );
   }
-
   return (
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollViewContainer}>
