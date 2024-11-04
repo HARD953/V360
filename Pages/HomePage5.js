@@ -142,7 +142,7 @@ export default function HomePage4({ navigation, route }) {
           </TouchableOpacity>
         </View>
         <View style={styles.btn1}>
-          <TouchableOpacity style={[styles.btns,{"backgroundColor":"#008080"}]} onPress={handleSubmit1}>
+          <TouchableOpacity style={[styles.btns,{"backgroundColor":"#2471a3"}]} onPress={handleSubmit1}>
             <Text style={styles.btntxt}>Suivant</Text>
             <MaterialIcons name="navigate-next" style={styles.iconeNext} />
           </TouchableOpacity>
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     marginVertical:5
   },
   btns: {
-    backgroundColor: '#008080',
+    backgroundColor: '#2471a3',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',

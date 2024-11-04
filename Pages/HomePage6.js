@@ -363,7 +363,7 @@ const styles = StyleSheet.create({
     borderRadius: Spacing,
   },
   btn: {
-    backgroundColor: '#008080',
+    backgroundColor: '#2471a3',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',

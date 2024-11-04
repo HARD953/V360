@@ -338,7 +338,7 @@ else {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Text style={styles.title}>Récapitulatif de la collecte MTN</Text>
+        <Text style={styles.title}>Récapitulatif des informations {dataFromHomePage1["entreprise"]}</Text>
         {/* Cadre pour les informations */}
         <View style={styles.sectionContainer}>
           <Text style={styles.sectionTitle}>Informations générales</Text>  
@@ -512,7 +512,7 @@ else {
           {/* Cadre pour les images */}
         <View style={styles.sectionContainer}>
           <Text style={styles.sectionTitle}>Images</Text>
-          <View style={styles.imageContainer1}>
+          <ScrollView style={styles.imageContainer1} horizontal={true}>
             <View style={styles.imageContainer}>
               {dataFromHomePageAdd2["image"] && (
                 <Image
@@ -521,7 +521,7 @@ else {
                 />
               )}
             </View>
-          <View style={styles.imageContainer}>
+          {/* <View style={styles.imageContainer}>
             {dataFromHomePage3["signature"] && (
               <Image
                 source={{ uri: dataFromHomePage3["signature"] }}
@@ -536,8 +536,8 @@ else {
                 style={styles.image}
               />
             )}
-          </View>
-          </View>
+          </View> */}
+          </ScrollView>
           </View>
         </>
       )}
@@ -546,16 +546,16 @@ else {
         {/* Cadre pour les images */}
         <View style={styles.sectionContainer}>
           <Text style={styles.sectionTitle}>Images</Text>
-        <View style={styles.imageContainer1}>
-          <View style={styles.imageContainer}>
-            {dataFromHomePageAdd2["image"] && (
-              <Image
-                source={{ uri: dataFromHomePageAdd2["image"] }}
-                style={styles.image}
-              />
-            )}
-          </View>
-        </View>
+          <ScrollView style={styles.imageContainer1} horizontal={true}>
+        <View style={styles.imageContainer}>
+              {dataFromHomePage2["image"] && (
+                <Image
+                  source={{ uri: dataFromHomePageAdd2["image"]}}
+                  style={styles.image}
+                />
+              )}
+            </View>
+        </ScrollView>
         </View>
         </>)}
       </ScrollView>
@@ -592,7 +592,7 @@ const styles = StyleSheet.create({
   },
   value: {},
   submitButton: {
-    backgroundColor: '#2c3e50',
+    backgroundColor: '#2471a3',
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
@@ -611,7 +611,6 @@ const styles = StyleSheet.create({
   },
   imageContainer1: {
     flexDirection: 'row',
-    alignItems: 'center',
     marginBottom: 20,
   },
   image: {

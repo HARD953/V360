@@ -459,10 +459,10 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   title: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 20,
-    color: '#008080',
+    color: '#2471a3',
   },
   infoContainer: {
     flexDirection: 'row',
@@ -474,7 +474,7 @@ const styles = StyleSheet.create({
   },
   value: {},
   submitButton: {
-    backgroundColor: '#2c3e50',
+    backgroundColor: '#2471a3',
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',

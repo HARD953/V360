@@ -411,7 +411,7 @@ const styles = StyleSheet.create({
     marginTop:10
   },
   btn: {
-    backgroundColor: '#008080',
+    backgroundColor: '#2471a3',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
@@ -550,7 +550,7 @@ const styles = StyleSheet.create({
     elevation: 0,
   },
   headerText: {
-    color: '#008080',
+    color: '#2471a3',
     fontSize: FontSize.large,
   },
 });

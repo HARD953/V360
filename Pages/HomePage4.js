@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     paddingTop: 15,
   },
   btns: {
-    backgroundColor: '#2c3e50',
+    backgroundColor: '#2471a3',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',

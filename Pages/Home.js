@@ -306,7 +306,6 @@ const Home = ({ navigation }) => {
     </View>
   )}
 </View>
-
           {/* Edit Element Modal */}
           <Modal
             animationType="slide"
@@ -335,7 +334,7 @@ const Home = ({ navigation }) => {
 const TouchableActionBox = ({ onPress, icon, color, text }) => (
   <TouchableOpacity onPress={onPress} style={[styles.box, { backgroundColor: color }]}>
     <View style={styles.iconContainer}>
-      <MaterialIcons name={icon} size={50} color="#808080"/>
+      <MaterialIcons name={icon} size={50} color="#2471a3"/>
     </View>
     <Text style={styles.boxText}>{text}</Text>
   </TouchableOpacity>
@@ -542,12 +541,14 @@ const ElementEditForm = ({ selectedElement, handleEdit, handleSave, closeModal,i
         value={selectedElement?.ODP_value}
         onChangeText={(text) => handleEdit('ODP_value', text)}
         placeholder="ODP Value"
+        keyboardType='numeric'
       />
       <TextInput
         style={styles.inputField}
         value={selectedElement?.longitude}
         onChangeText={(text) => handleEdit('longitude', text)}
         placeholder="Longitude"
+        keyboardType='numeric'
       />
     </View>
 
@@ -574,7 +575,7 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor:'white',
-      height: height*4,
+
     },
     button: {
       flexDirection:'row',
@@ -605,10 +606,10 @@ const styles = StyleSheet.create({
   scrollViewContainer: {
     flexGrow: 1,
     paddingBottom: 20,
-    
+    // height: height*1.13
   },
   mapContainer: {
-    height: '28%',
+    height: '22%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -621,20 +622,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     // backgroundColor:'#154360',
-    backgroundColor:'#D0D3D4',
+    backgroundColor:'white',
     width:'97%',
-    borderWidth:0,
+    borderWidth:1,
     marginVertical:10,
     borderRadius:Spacing,
-    borderColor:'#1ABC9C',
+    borderColor:'#2471a3',
     shadowColor: '#000',
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 2,
-    // },
-    // shadowOpacity: 0.5,
-    // shadowRadius: 3.84,
-    // elevation: 2, // Pour Android
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 3.84,
+    elevation: 2, // Pour Android
   },
   collecte: {
     fontSize: 15,
@@ -659,14 +660,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '97%',
     margin: 10,
-    height:'20%'
+    height:'12%'
   },
   rightView: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 10,
-    borderColor: '#1F618D', // Ajout du borderColor
+    borderColor: '#2471a3', // Ajout du borderColor
     borderWidth: 0, // Ajout de la largeur de la bordure
     borderRadius:10,
     backgroundColor:'white',
@@ -684,7 +685,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 5,
-    borderColor: 'cyan', // Ajout du borderColor
+    borderColor: '#2471a3', // Ajout du borderColor
     borderWidth: 0, // Ajout de la largeur de la bordure
     borderRadius:10,
     backgroundColor:'white',
@@ -701,7 +702,7 @@ const styles = StyleSheet.create({
   direct:{
     flexDirection:'row',
     width:'70%',
-    height:'30%',
+    height:'40%',
   },
   // rowCarre: {
   //   flexDirection: 'row',
@@ -716,12 +717,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: 5,
-    borderColor: '#607D8B', // Ajout du borderColor
+    borderColor: '#2471a3', // Ajout du borderColor
     borderWidth: 0,
     // borderColor: 'green', // Ajout du borderColor
     // borderWidth: 2, // Ajout de la largeur de la bordure
-    borderRadius:10,
-    backgroundColor:'#795548',
+    borderRadius:5,
+    backgroundColor:'#2ECC71',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -740,8 +741,8 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     // borderColor: 'green', // Ajout du borderColor
     // borderWidth: 2, // Ajout de la largeur de la bordure
-    borderRadius:10,
-    backgroundColor:'#F8C471',
+    borderRadius:5,
+    backgroundColor:'#F39C12',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -759,8 +760,8 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     // borderColor: 'green', // Ajout du borderColor
     // borderWidth: 2, // Ajout de la largeur de la bordure
-    borderRadius:10,
-    backgroundColor:'#D35400',
+    borderRadius:5,
+    backgroundColor:'#C0392B',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -796,7 +797,7 @@ const styles = StyleSheet.create({
     borderRadius: Spacing,
     backgroundColor: 'white',
     padding: 10,
-    marginBottom: 10,
+    marginBottom: 2,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -804,20 +805,20 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5, // Pour Android
-  
   },
   boxRed: {
     backgroundColor: '#055093',
   },
   boxText: {
     color: 'black',
-    fontSize: FontSize.medium,
+    fontSize: FontSize.small,
     marginTop: 5,
+    fontWeight:'bold'
   },
   boxText1: {
     color: 'white',
     fontSize: 14,
-    marginTop: 2,
+    
     fontWeight:'600'
   },
   elementsRecensesContainer: {

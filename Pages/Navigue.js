@@ -39,9 +39,9 @@ export default function Navigue({ navigation }) {
           options={({ navigation }) => ({
             headerShown: true,
             headerStyle: {
-              backgroundColor: '#008080',
+              backgroundColor: '#2471a3',
               },
-            headerTintColor: '#008080',
+            headerTintColor: '#2471a3',
             headerRight: () => (
               <Ionicons
                 name="log-out-outline" 
@@ -62,7 +62,7 @@ export default function Navigue({ navigation }) {
                         title: '',
                         headerShown: true,
                         headerStyle: {
-                        backgroundColor: '#008080',
+                        backgroundColor: '#2471a3',
                         },
                         headerTintColor: 'white',
                         headerTitleStyle: {
@@ -83,7 +83,7 @@ export default function Navigue({ navigation }) {
         <Stack.Screen name="HomPage2" component={HomPage2} options={({ navigation }) => ({
                         title: '',
                         headerStyle: {
-                        backgroundColor: '#008080',
+                        backgroundColor: '#2471a3',
                         },
                         headerTintColor: 'white',
                         headerTitleStyle: {
@@ -102,10 +102,9 @@ export default function Navigue({ navigation }) {
                 ),
         })}/>
         <Stack.Screen name="HomePage3" component={HomePage3} options={({ navigation }) => ({
-                        
                         title: '',
                         headerStyle: {
-                        backgroundColor: '#008080',
+                        backgroundColor: '#2471a3',
                         },
                         headerTintColor: 'white',
                         headerTitleStyle: {
@@ -123,11 +122,10 @@ export default function Navigue({ navigation }) {
                 />
                 ),
         })}/>
-        <Stack.Screen name="HomePage4" component={HomePage4} options={({ navigation }) => ({
-                        
+        <Stack.Screen name="HomePage4" component={HomePage4} options={({ navigation }) => ({                        
                         title: '',
                         headerStyle: {
-                        backgroundColor: '#008080',
+                        backgroundColor: '#2471a3',
                         },
                         headerTintColor: 'white',
                         headerTitleStyle: {
@@ -148,7 +146,7 @@ export default function Navigue({ navigation }) {
         <Stack.Screen name="RecapPage" component={RecapPage} options={({ navigation }) => ({
                         title: '',
                         headerStyle: {
-                        backgroundColor: '#008080',
+                        backgroundColor: '#2471a3',
                         },
                         headerTintColor: 'white',
                         headerTitleStyle: {
@@ -169,7 +167,7 @@ export default function Navigue({ navigation }) {
         <Stack.Screen name="RecapPage2" component={RecapPage2} options={({ navigation }) => ({
                         title: '',
                         headerStyle: {
-                        backgroundColor: '#008080',
+                        backgroundColor: '#2471a3',
                         },
                         headerTintColor: 'white',
                         headerTitleStyle: {
@@ -190,7 +188,7 @@ export default function Navigue({ navigation }) {
         <Stack.Screen name="ProfilePage" component={ProfilePage} options={({ navigation }) => ({
                         title: 'Lanfiatech',
                         headerStyle: {
-                        backgroundColor: '#008080',
+                        backgroundColor: '#2471a3',
                         },
                         headerTintColor: 'white',
                         headerTitleStyle: {
@@ -211,9 +209,9 @@ export default function Navigue({ navigation }) {
                 ),
         })}/>
         <Stack.Screen name="HomPage5" component={HomePage5} options={({ navigation }) => ({
-                        title: 'Lanfiatech',
+                        title: '',
                         headerStyle: {
-                        backgroundColor: '#008080',
+                        backgroundColor: '#2471a3',
                         },
                         headerTintColor: 'white',
                         headerTitleStyle: {
@@ -234,9 +232,9 @@ export default function Navigue({ navigation }) {
                 ),
         })}/>
         <Stack.Screen name="HomPage6" component={HomePage6} options={({ navigation }) => ({
-                        title: 'Lanfiatech',
+                        title: '',
                         headerStyle: {
-                        backgroundColor: '#008080',
+                        backgroundColor: '#2471a3',
                         },
                         headerTintColor: 'white',
                         headerTitleStyle: {
@@ -257,9 +255,9 @@ export default function Navigue({ navigation }) {
                 ),
         })}/>
         <Stack.Screen name="HomPage7" component={HomePage7} options={({ navigation }) => ({
-                        title: 'Lanfiatech',
+                        title: '',
                         headerStyle: {
-                        backgroundColor: '#008080',
+                        backgroundColor: '#2471a3',
                         },
                         headerTintColor: 'white',
                         headerTitleStyle: {
@@ -282,7 +280,7 @@ export default function Navigue({ navigation }) {
         <Stack.Screen name="Voir" component={Voir} options={({ navigation }) => ({
                         title: 'Lanfiatech',
                         headerStyle: {
-                        backgroundColor: '#008080',
+                        backgroundColor: '#2471a3',
                         },
                         headerTintColor: 'white',
                         headerTitleStyle: {

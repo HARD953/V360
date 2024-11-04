@@ -132,6 +132,68 @@ export default function HomPage2({ navigation, route }) {
     // Naviguer vers HomPage7 avec les paramètres définis
     navigation.navigate('RecapPage2', params);
   };
+
+  const handleAE = (value) => {
+    setAE(value);
+    if (value) {
+      setAEA(false);
+      setAET(false);
+      setAP(false);
+      setAPA(false);
+      setAPT(false);
+    }
+  };
+  const handleAEA = (value) => {
+    setAEA(value);
+    if (value) {
+      setAE(false);
+      setAET(false);
+      setAP(false);
+      setAPA(false);
+      setAPT(false);
+    }
+  };
+  const handleAET = (value) => {
+    setAET(value);
+    if (value) {
+      setAEA(false);
+      setAE(false);
+      setAP(false);
+      setAPA(false);
+      setAPT(false);
+    }
+  };
+  const handleAP = (value) => {
+    setAP(value);
+    if (value) {
+      setAEA(false);
+      setAET(false);
+      setAE(false);
+      setAPA(false);
+      setAPT(false);
+    }
+  };
+  const handleAPA = (value) => {
+    setAPA(value);
+    if (value) {
+      setAEA(false);
+      setAET(false);
+      setAP(false);
+      setAE(false);
+      setAPT(false);
+    }
+  };
+  const handleAPT = (value) => {
+    setAPT(value);
+    if (value) {
+      setAEA(false);
+      setAET(false);
+      setAP(false);
+      setAPA(false);
+      setAE(false);
+    }
+  };
+
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -189,9 +251,7 @@ export default function HomPage2({ navigation, route }) {
               <Switch
                 value={AP}
                 circleSize={20}
-                onValueChange={(newValue1) => {
-                  setAP(newValue1);
-                }}
+                onValueChange={handleAP}
                 activeText=""
                 inActiveText=""
               />
@@ -201,9 +261,7 @@ export default function HomPage2({ navigation, route }) {
               <Switch
                 value={APA}
                 circleSize={20}
-                onValueChange={(newValue1) => {
-                  setAPA(newValue1);
-                }}
+                onValueChange={handleAPA}
                 activeText=""
                 inActiveText=""
               />
@@ -213,9 +271,7 @@ export default function HomPage2({ navigation, route }) {
               <Switch
                 value={APT}
                 circleSize={20}
-                onValueChange={(newValue1) => {
-                  setAPT(newValue1);
-                }}
+                onValueChange={handleAPT}
                 activeText=""
                 inActiveText=""
               />
@@ -225,9 +281,7 @@ export default function HomPage2({ navigation, route }) {
               <Switch
                 value={AE}
                 circleSize={20}
-                onValueChange={(newValue1) => {
-                  setAE(newValue1);
-                }}
+                onValueChange={handleAE}
                 activeText=""
                 inActiveText=""
               />
@@ -237,9 +291,7 @@ export default function HomPage2({ navigation, route }) {
               <Switch
                 value={AEA}
                 circleSize={20}
-                onValueChange={(newValue1) => {
-                  setAEA(newValue1);
-                }}
+                onValueChange={handleAEA}
                 activeText=""
                 inActiveText=""
               />
@@ -249,9 +301,7 @@ export default function HomPage2({ navigation, route }) {
               <Switch
                 value={AET}
                 circleSize={20}
-                onValueChange={(newValue1) => {
-                  setAET(newValue1);
-                }}
+                onValueChange={handleAET}
                 activeText=""
                 inActiveText=""
               />
@@ -519,7 +569,7 @@ const styles = StyleSheet.create({
     borderRadius: Spacing,
   },
   btnt: {
-    backgroundColor: '#008080',
+    backgroundColor: '#2471a3',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
