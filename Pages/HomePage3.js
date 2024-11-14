@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   input: {
     width: '100%',
     marginBottom: Spacing,
-    backgroundColor:'#e7deec'
+    backgroundColor:'#fdfefe'
   },
   signatureContainer: {
     width: '100%',

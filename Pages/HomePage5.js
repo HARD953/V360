@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     width: '100%',
     marginBottom: Spacing,
     borderBottomWidth:1,
-    backgroundColor:'#e7deec'
+    backgroundColor:'#fdfefe'
   },
   switchContainer: {
     flexDirection: 'row',

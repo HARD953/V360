@@ -220,6 +220,11 @@ const RecapPage2 = ({ navigation, route }) => {
           type: 'image/jpeg',
           name: 'image.jpg',
           });
+          formData.append('image_support', {
+            uri: dataFromHomePage2.image[0],
+            type: 'image/jpeg',
+            name: 'image.jpg',
+          });
         }
      }
      
@@ -258,6 +263,11 @@ else {
           uri: dataFromHomePageAdd2['image'],
           type: 'image/jpeg',
           name: 'image.jpg',
+          });
+          formData.append('image_support', {
+            uri: dataFromHomePage2.image[0],
+            type: 'image/jpeg',
+            name: 'image.jpg',
           });
         }
       formData.append('Rnom', dataFromHomePage3['nom']);

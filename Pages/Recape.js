@@ -162,39 +162,45 @@ else {
       if (response.status === 201) {
         console.log('Données soumises avec succès');
         // Affiche l'alerte pour demander si l'utilisateur souhaite continuer
-        Alert.alert(
-          "Succès",
-          "Les données ont été soumises avec succès. Souhaitez-vous ajouter un autre support à ce site?",
-          [
-            {
-              text: "Non",
-              onPress: () => navigation.replace('SplashScreens')
-            },
-            {
-              text: "Oui",
-              onPress: () => {
-                // Détermine les paramètres en fonction de previousRouteName
-                if (previousRouteName === "HomPage5") {
-                  navigation.navigate("HomPage6", {
-                    previousRouteName,
-                    dataFromHomePage1,
-                    dataFromHomePage2,
-                    dataFromHomePage5
-                  });
-                } else {
-                  navigation.navigate("HomPage6", {
-                    previousRouteName,
-                    dataFromHomePage1,
-                    dataFromHomePage2,
-                    dataFromHomePage3,
-                    dataFromHomePage4,
-                    dataFromHomePage5
-                  });
+        if (!dataFromHomePage1["switchEnabled3"]) {
+          // Redirige directement vers le SplashScreens si switchEnabled3 est false
+          navigation.replace('SplashScreens');
+        } else {
+          // Affiche l'alerte si switchEnabled3 est true
+          Alert.alert(
+            "Succès",
+            "Les données ont été soumises avec succès. Souhaitez-vous ajouter un autre support à ce site?",
+            [
+              {
+                text: "Non",
+                onPress: () => navigation.replace('SplashScreens')
+              },
+              {
+                text: "Oui",
+                onPress: () => {
+                  // Détermine les paramètres en fonction de previousRouteName
+                  if (previousRouteName === "HomPage5") {
+                    navigation.navigate("HomPage6", {
+                      previousRouteName,
+                      dataFromHomePage1,
+                      dataFromHomePage2,
+                      dataFromHomePage5
+                    });
+                  } else {
+                    navigation.navigate("HomPage6", {
+                      previousRouteName,
+                      dataFromHomePage1,
+                      dataFromHomePage2,
+                      dataFromHomePage3,
+                      dataFromHomePage4,
+                      dataFromHomePage5
+                    });
+                  }
                 }
               }
-            }
-          ]
-        );
+            ]
+          );
+        }        
       }
     } catch (error) {
       console.error('Erreur lors de la soumission des données :', error);

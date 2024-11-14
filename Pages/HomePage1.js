@@ -35,7 +35,7 @@ export default function HomPage1({ navigation }) {
   const [nombresupport, setNombresupport] = useState(null);
   const [entreprise1, setEntreprise1] = useState([]);
   const [marque, setMarque] = useState('');
-  const [nomsite, setNomsite] = useState('');
+  const [nomsite, setNomsite] = useState('RAS');
   const [marque1, setMarque1] = useState([]);
   const [village, setVillage] = useState('');
   const [village1, setVillage1] = useState([]);
@@ -55,6 +55,7 @@ export default function HomPage1({ navigation }) {
   const [switchEnabled, setSwitchEnabled] = useState(false);
   const [switchEnabled1, setSwitchEnabled1] = useState(false);
   const [switchEnabled2, setSwitchEnabled2] = useState(false);
+  const [switchEnabled3, setSwitchEnabled3] = useState(false);
   
   // State for modal management
   const [modalVisible, setModalVisible] = useState(false);
@@ -133,6 +134,13 @@ export default function HomPage1({ navigation }) {
       setVillage(''); // Reset Quartier
     }
   };
+
+  const toggleSwitch3 = () => {
+    setSwitchEnabled3(prev => !prev);
+    if (!switchEnabled3) {
+      setNomsite(''); // Reset Quartier
+    }
+  };
   // Open modal for selection
   const openModal = (field, data) => {
     setCurrentField(field);
@@ -191,7 +199,8 @@ export default function HomPage1({ navigation }) {
       nomsite,
       nombreface,
       nombresupport,
-      commune
+      commune,
+      switchEnabled3
     };
     navigation.navigate('HomPage2', { dataFromHomePage1 });
   };
@@ -259,15 +268,23 @@ export default function HomPage1({ navigation }) {
                   style={{ marginTop: 10 }}
                 />
               </View>
-              <View style={styles.saisi}>
-              <TextInput
+              {switchEnabled3 && (
+                  <TextInput
                     style={styles.inputs}
                     placeholder='Nom du site ...'
                     placeholderTextColor={Colors.darkText}
                     value={nomsite}
                     onChangeText={setNomsite}
                   />
-              </View>
+                )}
+                <View style={{ justifyContent:'flex-start' }}>
+                <Text style={{justifyContent:'flex-end',fontWeight:'500',marginLeft:3}}>Site ?</Text>
+                <Switch
+                  value={switchEnabled3}
+                  onValueChange={toggleSwitch3}
+                  style={{marginTOP:20}}
+                />
+                </View>
               <View style={styles.saisi}>
                 <Pressable style={styles.selectBox} onPress={() => openModal('marque', marque1)}>
                   <Text>{marque || 'Marque ...'}</Text>
